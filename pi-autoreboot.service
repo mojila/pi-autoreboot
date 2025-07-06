@@ -1,0 +1,25 @@
+[Unit]
+Description=Pi Auto-Reboot Service - Internet Connectivity Monitor
+After=network.target
+Wants=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/pi-autoreboot
+Restart=always
+RestartSec=10
+Environment=RUST_LOG=info
+StandardOutput=journal
+StandardError=journal
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log
+
+[Install]
+WantedBy=multi-user.target
